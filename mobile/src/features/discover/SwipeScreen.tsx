@@ -13,7 +13,6 @@ import { useSessionStore } from '@/domain/session/store';
 import { useLikedHistoryStore } from '@/domain/session/history';
 import { dishRepository } from '@/domain/dish/repositoryInstance';
 import { createDefaultEngine } from '@/domain/recommendation/defaultEngine';
-import { computeMatchConfidence } from '@/domain/recommendation/confidence';
 import type { Dish } from '@/domain/dish/types';
 
 const engine = createDefaultEngine();
@@ -89,14 +88,9 @@ export const SwipeScreen: React.FC = () => {
   }, [session?.seenDishIds.length, remaining.length]);
 
   const confidence = useMemo(() => {
-    if (!session || remaining.length === 0) return 0;
-    const ctx = {
-      user: { tasteVector: session.tasteVector, categoricalCounts: session.categoricalCounts },
-      session, now: new Date(),
-    };
-    const ranked = engine.rankDishes(remaining, ctx);
-    return computeMatchConfidence(ranked.slice(0, 10).map(r => r.score));
-  }, [session?.seenDishIds.length, remaining.length]);
+    if (!session) return 0;
+    return Math.min(1, session.likes.length / session.likesTargetForNextMatch);
+  }, [session?.likes.length, session?.likesTargetForNextMatch]);
 
   const onSwipe = async (direction: 'like' | 'dislike') => {
     if (!currentDish || !session) return;
