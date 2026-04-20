@@ -12,6 +12,13 @@ export const WelcomeScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.content}>
+        <View style={styles.heroWrap}>
+          <View style={[styles.heroCircle, styles.heroCircleBack]} />
+          <View style={[styles.heroCircle, styles.heroCircleMid]} />
+          <View style={[styles.heroCircle, styles.heroCircleFront]}>
+            <Text style={styles.heroEmoji}>🍽</Text>
+          </View>
+        </View>
         <Text style={styles.eyebrow}>Munch</Text>
         <Text style={styles.title}>
           Discover your{'\n'}
@@ -31,6 +38,36 @@ export const WelcomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.backgroundLight, padding: spacing.xl },
   content: { flex: 1, justifyContent: 'center' },
+  heroWrap: {
+    alignItems: 'center',
+    marginBottom: spacing['2xl'],
+    height: 180,
+    justifyContent: 'center',
+  },
+  heroCircle: {
+    position: 'absolute',
+    borderRadius: 9999,
+  },
+  heroCircleBack: {
+    width: 180, height: 180,
+    backgroundColor: 'rgba(242, 127, 13, 0.08)',
+  },
+  heroCircleMid: {
+    width: 130, height: 130,
+    backgroundColor: 'rgba(242, 127, 13, 0.18)',
+  },
+  heroCircleFront: {
+    width: 90, height: 90,
+    backgroundColor: colors.primary,
+    alignItems: 'center',
+    justifyContent: 'center',
+    shadowColor: colors.primary,
+    shadowOpacity: 0.25,
+    shadowOffset: { width: 0, height: 10 },
+    shadowRadius: 20,
+    elevation: 8,
+  },
+  heroEmoji: { fontSize: 44 },
   eyebrow: {
     fontFamily: typography.fontFamily.bold,
     fontSize: typography.sizes.sm,
