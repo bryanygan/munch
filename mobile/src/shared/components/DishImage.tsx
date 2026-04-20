@@ -1,23 +1,21 @@
 import React from 'react';
 import { StyleSheet, View, ImageStyle, ViewStyle } from 'react-native';
 import { Image } from 'expo-image';
-import { Blurhash } from 'react-native-blurhash';
+import { colors } from '@/shared/theme';
 
 type Props = {
   uri: string;
-  blurhash?: string;
+  blurhash?: string; // reserved for future use; ignored in Expo Go build
   style?: ViewStyle;
   imageStyle?: ImageStyle;
   contentFit?: 'cover' | 'contain';
 };
 
 export const DishImage: React.FC<Props> = ({
-  uri, blurhash, style, imageStyle, contentFit = 'cover',
+  uri, style, imageStyle, contentFit = 'cover',
 }) => (
   <View style={[styles.root, style]}>
-    {blurhash ? (
-      <Blurhash blurhash={blurhash} style={StyleSheet.absoluteFill} />
-    ) : null}
+    <View style={[StyleSheet.absoluteFill, styles.placeholder]} />
     <Image
       source={{ uri }}
       style={[StyleSheet.absoluteFill, imageStyle]}
@@ -29,4 +27,5 @@ export const DishImage: React.FC<Props> = ({
 
 const styles = StyleSheet.create({
   root: { overflow: 'hidden' },
+  placeholder: { backgroundColor: colors.divider },
 });
