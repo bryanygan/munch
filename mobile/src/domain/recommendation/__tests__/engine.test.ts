@@ -31,8 +31,8 @@ describe('RecommendationEngine', () => {
     ]);
     const dishes = [dish('low', 1), dish('high', 5), dish('mid', 3)];
     const ranked = engine.rankDishes(dishes, baseCtx);
-    expect(ranked[0].dish.id).toBe('high');
-    expect(ranked[2].dish.id).toBe('low');
+    expect(ranked[0]!.dish.id).toBe('high');
+    expect(ranked[2]!.dish.id).toBe('low');
   });
 
   it('matchTop3 returns top 3 by score with percents', () => {
@@ -42,9 +42,9 @@ describe('RecommendationEngine', () => {
     const dishes = [dish('a', 5), dish('b', 4), dish('c', 3), dish('d', 2)];
     const match = engine.matchTop3(dishes, baseCtx);
     expect(match.top3).toHaveLength(3);
-    expect(match.top3[0].dish.id).toBe('a');
-    expect(match.top3[0].matchPercent).toBe(100);
-    expect(match.top3[2].dish.id).toBe('c');
+    expect(match.top3[0]!.dish.id).toBe('a');
+    expect(match.top3[0]!.matchPercent).toBe(100);
+    expect(match.top3[2]!.dish.id).toBe('c');
     expect(match.spread).toBeCloseTo(0.4, 10);
   });
 
@@ -71,6 +71,6 @@ describe('RecommendationEngine', () => {
     const s2: Scorer = { id: 'b', weight: 0.5, score: () => 0 };
     const engine = new RecommendationEngine([s1, s2]);
     const ranked = engine.rankDishes([dish('x')], baseCtx);
-    expect(ranked[0].score).toBeCloseTo(0.5, 10);
+    expect(ranked[0]!.score).toBeCloseTo(0.5, 10);
   });
 });

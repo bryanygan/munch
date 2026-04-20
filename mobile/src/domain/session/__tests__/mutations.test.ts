@@ -23,7 +23,7 @@ describe('applySwipe', () => {
     const next = applySwipe(s, d(), 'like');
     expect(next.likes).toHaveLength(1);
     expect(next.dislikes).toHaveLength(0);
-    expect(next.likes[0].dishId).toBe('d1');
+    expect(next.likes[0]!.dishId).toBe('d1');
   });
 
   it('appends to dislikes on left swipe', () => {

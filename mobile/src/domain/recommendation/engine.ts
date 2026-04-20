@@ -39,7 +39,7 @@ export class RecommendationEngine {
     const sliceSize = Math.max(3, Math.floor(ranked.length * 0.2));
     const topSlice = ranked.slice(0, Math.min(sliceSize, ranked.length));
     const idx = Math.floor(rng() * topSlice.length);
-    return topSlice[idx].dish;
+    return topSlice[idx]!.dish;
   }
 
   matchTop3(
@@ -51,7 +51,7 @@ export class RecommendationEngine {
       dish: r.dish,
       matchPercent: Math.round(r.score * 100),
     }));
-    const spread = ranked.length >= 3 ? ranked[0].score - ranked[2].score : 0;
+    const spread = ranked.length >= 3 ? ranked[0]!.score - ranked[2]!.score : 0;
     return { top3, spread };
   }
 }
