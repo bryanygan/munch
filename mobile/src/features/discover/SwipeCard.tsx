@@ -59,11 +59,11 @@ export const SwipeCard: React.FC<Props> = ({ dish, onSwipe, onPressDetails, inte
   }));
 
   const nopeStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(translateX.value, [-THRESHOLD, 0], [1, 0], Extrapolation.CLAMP),
+    opacity: interpolate(translateX.value, [-40, 0], [1, 0], Extrapolation.CLAMP),
   }));
 
   const yumStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(translateX.value, [0, THRESHOLD], [0, 1], Extrapolation.CLAMP),
+    opacity: interpolate(translateX.value, [0, 40], [0, 1], Extrapolation.CLAMP),
   }));
 
   const flagEmoji = dish.country
