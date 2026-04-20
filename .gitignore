@@ -32,6 +32,9 @@ Desktop.ini
 *.log
 npm-debug.log*
 
+# Jest coverage output
+coverage/
+
 # Superpowers brainstorming artifacts
 .superpowers/
 
