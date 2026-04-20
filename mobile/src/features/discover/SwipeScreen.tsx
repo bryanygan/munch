@@ -147,7 +147,7 @@ export const SwipeScreen: React.FC = () => {
   const totalSwipes = session.likes.length + session.dislikes.length;
 
   return (
-    <SafeAreaView style={styles.root} edges={['top']}>
+    <SafeAreaView style={styles.root} edges={['top', 'bottom']}>
       <MatchPotentialBar
         confidence={confidence}
         likes={session.likes.length}
@@ -173,7 +173,7 @@ export const SwipeScreen: React.FC = () => {
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: colors.backgroundLight },
-  cardArea: { flex: 1, margin: spacing.lg, aspectRatio: 0.75, position: 'relative' },
+  cardArea: { flex: 1, marginHorizontal: spacing.lg, marginVertical: spacing.md, position: 'relative' },
   buttonsRow: { flexDirection: 'row', justifyContent: 'center', gap: spacing.lg, padding: spacing.lg },
   empty: { flex: 1, padding: spacing.xl, alignItems: 'center', justifyContent: 'center', gap: spacing.md },
   emptyTitle: { fontFamily: typography.fontFamily.extraBold, fontSize: typography.sizes.xl, color: colors.textPrimary, textAlign: 'center' },
