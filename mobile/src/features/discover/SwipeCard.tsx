@@ -78,7 +78,7 @@ export const SwipeCard: React.FC<Props> = ({ dish, onSwipe, onPressDetails, inte
   return (
     <GestureDetector gesture={pan}>
       <Animated.View style={[styles.card, cardStyle]}>
-        <DishImage uri={dish.image_url} blurhash={dish.image_blurhash} style={StyleSheet.absoluteFillObject} />
+        <DishImage uri={dish.image_url} thumbhash={dish.image_thumbhash} style={StyleSheet.absoluteFillObject} />
         <View style={styles.darkGradient} pointerEvents="none" />
 
         <Animated.View style={[styles.badge, styles.badgeNope, nopeStyle]} pointerEvents="none">

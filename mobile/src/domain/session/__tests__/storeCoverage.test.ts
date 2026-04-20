@@ -47,7 +47,7 @@ describe('useSessionStore – coverage gaps', () => {
       textures: [], meal_types: [], temperature: 'any', typical_time: 'any',
       contains: { gluten:false, dairy:false, seafood:false, nuts:false, eggs:false, pork:false, beef:false, alcohol:false },
       diet_compatible: [], price_tier: 1, prep_complexity: 'low', popularity: 1,
-      image_url: '', image_blurhash: '', tags: [] };
+      image_url: '', image_thumbhash: '', tags: [] };
     await expect(useSessionStore.getState().recordSwipe(dish, 'like')).resolves.not.toThrow();
     expect(useSessionStore.getState().session).toBeNull();
   });

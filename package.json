@@ -1,0 +1,13 @@
+{
+  "name": "munch-scripts",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "sharp": "^0.33.0",
+    "thumbhash": "^0.1.1"
+  },
+  "scripts": {
+    "compute-thumbhashes": "node scripts/compute-thumbhashes.mjs",
+    "validate-foods": "node scripts/validate-foods.mjs"
+  }
+}

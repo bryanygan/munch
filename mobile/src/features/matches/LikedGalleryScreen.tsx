@@ -42,7 +42,7 @@ export const LikedGalleryScreen: React.FC = () => {
         contentContainerStyle={styles.grid}
         renderItem={({ item }) => (
           <View style={styles.card}>
-            <DishImage uri={item.image_url} blurhash={item.image_blurhash} style={styles.img} />
+            <DishImage uri={item.image_url} thumbhash={item.image_thumbhash} style={styles.img} />
             <View style={styles.cardBody}>
               <Text style={styles.cardName} numberOfLines={1}>{item.name}</Text>
             </View>

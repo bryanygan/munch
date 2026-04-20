@@ -57,7 +57,7 @@ export const MatchRevealScreen: React.FC = () => {
 
 const HeroCard: React.FC<{ entry: MatchEntry }> = ({ entry }) => (
   <View style={styles.hero}>
-    <DishImage uri={entry.dish.image_url} blurhash={entry.dish.image_blurhash} style={styles.heroImage} />
+    <DishImage uri={entry.dish.image_url} thumbhash={entry.dish.image_thumbhash} style={styles.heroImage} />
     <View style={styles.heroBody}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <Text style={styles.heroName}>{entry.dish.name}</Text>
@@ -70,7 +70,7 @@ const HeroCard: React.FC<{ entry: MatchEntry }> = ({ entry }) => (
 
 const SecondaryCard: React.FC<{ entry: MatchEntry }> = ({ entry }) => (
   <View style={styles.secondary}>
-    <DishImage uri={entry.dish.image_url} blurhash={entry.dish.image_blurhash} style={styles.secondaryImage} />
+    <DishImage uri={entry.dish.image_url} thumbhash={entry.dish.image_thumbhash} style={styles.secondaryImage} />
     <View style={{ padding: spacing.md }}>
       <Text style={styles.secondaryName} numberOfLines={1}>{entry.dish.name}</Text>
       <Text style={styles.secondaryPercent}>{entry.matchPercent}% match</Text>

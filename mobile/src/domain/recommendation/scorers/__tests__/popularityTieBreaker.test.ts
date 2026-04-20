@@ -12,7 +12,7 @@ const dish = (pop: 1|2|3|4|5): Dish => ({
     eggs: false, pork: false, beef: false, alcohol: false,
   },
   diet_compatible: [], price_tier: 2, prep_complexity: 'low',
-  popularity: pop, image_url: '', image_blurhash: '', tags: [],
+  popularity: pop, image_url: '', image_thumbhash: '', tags: [],
 });
 
 describe('PopularityTieBreakerScorer', () => {

@@ -20,7 +20,7 @@ export const DetailsSheet: React.FC<Props> = ({ dish, onClose }) => {
           </Pressable>
           {dish ? (
             <ScrollView contentContainerStyle={styles.content}>
-              <DishImage uri={dish.image_url} blurhash={dish.image_blurhash} style={styles.image} />
+              <DishImage uri={dish.image_url} thumbhash={dish.image_thumbhash} style={styles.image} />
               <Text style={styles.name}>{dish.name}</Text>
               <Text style={styles.country}>{dish.country} · {dish.cuisine_region.replace('_', ' ')}</Text>
               <Text style={styles.desc}>{dish.description}</Text>

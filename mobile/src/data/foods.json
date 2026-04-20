@@ -16,7 +16,7 @@
     "prep_complexity": "medium",
     "popularity": 4,
     "image_url": "https://images.unsplash.com/photo-1711161554195-4a36ad4a3a5f?w=800&q=80",
-    "image_blurhash": "L6PZfSi_.AyE_3t7t7R**0o#DgR4",
+    "image_thumbhash": "L6PZfSi_.AyE_3t7t7R**0o#DgR4",
     "tags": ["coconut", "rice", "fruit", "tropical", "sweet"]
   },
   {
@@ -36,7 +36,7 @@
     "prep_complexity": "high",
     "popularity": 5,
     "image_url": "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=800&q=80",
-    "image_blurhash": "LBD9Aa00IU~q00xu%MRj%Lxu%2WB",
+    "image_thumbhash": "LBD9Aa00IU~q00xu%MRj%Lxu%2WB",
     "tags": ["noodles", "pork", "broth", "japanese", "comfort"]
   },
   {
@@ -56,7 +56,7 @@
     "prep_complexity": "medium",
     "popularity": 5,
     "image_url": "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=800&q=80",
-    "image_blurhash": "LKF~NK-;M{%2E1s:t7ozVsozRjxu",
+    "image_thumbhash": "LKF~NK-;M{%2E1s:t7ozVsozRjxu",
     "tags": ["curry", "chicken", "spiced", "indian", "comfort"]
   },
   {
@@ -76,7 +76,7 @@
     "prep_complexity": "medium",
     "popularity": 5,
     "image_url": "https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=800&q=80",
-    "image_blurhash": "LGF5?xYk^6#M@-5c,1Ex~~PR%Mxu",
+    "image_thumbhash": "LGF5?xYk^6#M@-5c,1Ex~~PR%Mxu",
     "tags": ["taco", "pork", "pineapple", "mexican", "street_food"]
   },
   {
@@ -96,7 +96,7 @@
     "prep_complexity": "medium",
     "popularity": 4,
     "image_url": "https://images.unsplash.com/photo-1590301157890-4810ed352733?w=800&q=80",
-    "image_blurhash": "LCDc,_xuWB-;~WRjM{WB%Mofxuxu",
+    "image_thumbhash": "LCDc,_xuWB-;~WRjM{WB%Mofxuxu",
     "tags": ["rice", "vegetables", "egg", "korean", "spicy"]
   },
   {
@@ -116,7 +116,7 @@
     "prep_complexity": "high",
     "popularity": 3,
     "image_url": "https://images.unsplash.com/photo-1600891964092-4316c288032e?w=800&q=80",
-    "image_blurhash": "LDD9F_xu00j[00WB~qRjIURjRjRj",
+    "image_thumbhash": "LDD9F_xu00j[00WB~qRjIURjRjRj",
     "tags": ["chicken", "wine", "braised", "french", "classic"]
   },
   {
@@ -136,7 +136,7 @@
     "prep_complexity": "medium",
     "popularity": 5,
     "image_url": "https://images.unsplash.com/photo-1604068549290-dea0e4a305ca?w=800&q=80",
-    "image_blurhash": "LBH.s*00~q%M00xu%2xu~q-;M{xu",
+    "image_thumbhash": "LBH.s*00~q%M00xu%2xu~q-;M{xu",
     "tags": ["pizza", "cheese", "tomato", "italian", "vegetarian"]
   },
   {
@@ -156,7 +156,7 @@
     "prep_complexity": "medium",
     "popularity": 4,
     "image_url": "https://images.unsplash.com/photo-1529006557810-274b9b2fc783?w=800&q=80",
-    "image_blurhash": "LBF5?xn%xu~qIUxuM{xuD%j[j[xu",
+    "image_thumbhash": "LBF5?xn%xu~qIUxuM{xuD%j[j[xu",
     "tags": ["lamb", "wrap", "spiced", "street_food", "middle_eastern"]
   },
   {
@@ -176,7 +176,7 @@
     "prep_complexity": "high",
     "popularity": 5,
     "image_url": "https://images.unsplash.com/photo-1583032015879-e5022cb87c3b?w=800&q=80",
-    "image_blurhash": "LCF5w4xu.8xu~qofM{j[IU%2t7of",
+    "image_thumbhash": "LCF5w4xu.8xu~qofM{j[IU%2t7of",
     "tags": ["noodles", "beef", "broth", "vietnamese", "herbs"]
   },
   {
@@ -196,7 +196,7 @@
     "prep_complexity": "low",
     "popularity": 4,
     "image_url": "https://images.unsplash.com/photo-1512058564366-18510be2db19?w=800&q=80",
-    "image_blurhash": "LBD9d-00_3t7~q%M%MS5IUWBIUxu",
+    "image_thumbhash": "LBD9d-00_3t7~q%M%MS5IUWBIUxu",
     "tags": ["rice", "fried", "egg", "indonesian", "spicy"]
   },
   {
@@ -216,7 +216,7 @@
     "prep_complexity": "high",
     "popularity": 3,
     "image_url": "https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80",
-    "image_blurhash": "LCE{R:00~q%M00xu~qxuIUWB%Mxu",
+    "image_thumbhash": "LCE{R:00~q%M00xu~qxuIUWB%Mxu",
     "tags": ["eggplant", "lamb", "baked", "greek", "casserole"]
   },
   {
@@ -236,7 +236,7 @@
     "prep_complexity": "medium",
     "popularity": 4,
     "image_url": "https://images.unsplash.com/photo-1590301157284-1e1a7b3de0ef?w=800&q=80",
-    "image_blurhash": "LCA~s=00~q%M00xuM{xuD%RjRjxu",
+    "image_thumbhash": "LCA~s=00~q%M00xuM{xuD%RjRjxu",
     "tags": ["beef", "grilled", "korean", "bbq", "marinated"]
   },
   {
@@ -256,7 +256,7 @@
     "prep_complexity": "medium",
     "popularity": 5,
     "image_url": "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=800&q=80",
-    "image_blurhash": "LDD9aa-;~q%M00j[%2j[M{xuRjxu",
+    "image_thumbhash": "LDD9aa-;~q%M00j[%2j[M{xuRjxu",
     "tags": ["chicken", "curry", "creamy", "indian", "mild"]
   },
   {
@@ -276,7 +276,7 @@
     "prep_complexity": "high",
     "popularity": 3,
     "image_url": "https://images.unsplash.com/photo-1594834749529-dd4a78e5f0e7?w=800&q=80",
-    "image_blurhash": "LBFr?]00~q%Mxu-;M{xuD%ayayxu",
+    "image_thumbhash": "LBFr?]00~q%Mxu-;M{xuD%ayayxu",
     "tags": ["beans", "pork", "stew", "brazilian", "hearty"]
   },
   {
@@ -296,7 +296,7 @@
     "prep_complexity": "high",
     "popularity": 3,
     "image_url": "https://images.unsplash.com/photo-1569525641866-7b1cc43af1b6?w=800&q=80",
-    "image_blurhash": "LBE{R:00ayayxu%Mxu~q00D%xuWB",
+    "image_thumbhash": "LBE{R:00ayayxu%Mxu~q00D%xuWB",
     "tags": ["injera", "chicken", "spicy", "ethiopian", "communal"]
   },
   {
@@ -316,7 +316,7 @@
     "prep_complexity": "high",
     "popularity": 5,
     "image_url": "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=800&q=80",
-    "image_blurhash": "LBIFMp~qIU-;M{M{xuDiM{j[xuRj",
+    "image_thumbhash": "LBIFMp~qIU-;M{M{xuDiM{j[xuRj",
     "tags": ["pastry", "butter", "breakfast", "french", "bakery"]
   },
   {
@@ -336,7 +336,7 @@
     "prep_complexity": "medium",
     "popularity": 5,
     "image_url": "https://images.unsplash.com/photo-1559314809-0d155014e29e?w=800&q=80",
-    "image_blurhash": "LCDc,_IU~q%M00xuM{xt00WBWBxu",
+    "image_thumbhash": "LCDc,_IU~q%M00xuM{xt00WBWBxu",
     "tags": ["noodles", "shrimp", "peanut", "thai", "stir_fry"]
   },
   {
@@ -356,7 +356,7 @@
     "prep_complexity": "medium",
     "popularity": 4,
     "image_url": "https://images.unsplash.com/photo-1624371414361-e670edf4a5eb?w=800&q=80",
-    "image_blurhash": "LBE{R:00xt~q?bxuM{j[00IUWBxu",
+    "image_thumbhash": "LBE{R:00xt~q?bxuM{j[00IUWBxu",
     "tags": ["fried", "pastry", "chocolate", "spanish", "sweet"]
   },
   {
@@ -376,7 +376,7 @@
     "prep_complexity": "medium",
     "popularity": 4,
     "image_url": "https://images.unsplash.com/photo-1644443988793-f58e8b8ed4c6?w=800&q=80",
-    "image_blurhash": "LBF~?]00~q%M00IUM{j[00D%xtxu",
+    "image_thumbhash": "LBF~?]00~q%M00IUM{j[00D%xtxu",
     "tags": ["rice", "tomato", "nigerian", "west_african", "smoky"]
   },
   {
@@ -396,7 +396,7 @@
     "prep_complexity": "high",
     "popularity": 4,
     "image_url": "https://images.unsplash.com/photo-1518492104633-130d0cc84637?w=800&q=80",
-    "image_blurhash": "LBF~?]00~q%M00xuxuoL00D%j[xo",
+    "image_thumbhash": "LBF~?]00~q%M00xuxuoL00D%j[xo",
     "tags": ["duck", "crispy", "pancake", "chinese", "festive"]
   },
   {
@@ -416,7 +416,7 @@
     "prep_complexity": "low",
     "popularity": 4,
     "image_url": "https://images.unsplash.com/photo-1541519227354-08fa5d50c820?w=800&q=80",
-    "image_blurhash": "LCF~?]00~q%M00xuM{j[00D%xtxu",
+    "image_thumbhash": "LCF~?]00~q%M00xuM{j[00D%xtxu",
     "tags": ["avocado", "toast", "egg", "brunch", "healthy"]
   },
   {
@@ -436,7 +436,7 @@
     "prep_complexity": "medium",
     "popularity": 3,
     "image_url": "https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=800&q=80",
-    "image_blurhash": "LBE{R:00xt~q?bxuM{j[00xuxuIU",
+    "image_thumbhash": "LBE{R:00xt~q?bxuM{j[00xuxuIU",
     "tags": ["dumplings", "potato", "cheese", "polish", "comfort"]
   }
 ]
