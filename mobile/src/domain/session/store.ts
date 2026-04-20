@@ -69,9 +69,16 @@ export const useSessionStore = create<SessionState>((set, get) => ({
     const next: SwipeSession = {
       ...current,
       status: 'active',
-      likesTargetForNextMatch: current.likesTargetForNextMatch + 10,
-      swipeCapForNextMatch: current.swipeCapForNextMatch + 30,
+      // Reset seen dishes + per-round counts so the user sees fresh cards.
+      // Taste vector and categorical counts are PRESERVED — recommendations stay refined.
+      seenDishIds: [],
+      likes: [],
+      dislikes: [],
+      // The targets are additive vs the full-match thresholds (10 likes / 40 swipes).
+      likesTargetForNextMatch: 10,
+      swipeCapForNextMatch: 40,
       completedMatch: undefined,
+      matchRevealsShown: current.matchRevealsShown,
     };
     await storage.write(next);
     set({ session: next });

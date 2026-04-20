@@ -48,14 +48,20 @@ describe('useSessionStore', () => {
     expect(useSessionStore.getState().session?.matchRevealsShown).toBe(1);
   });
 
-  it('continueSwiping advances targets', async () => {
+  it('continueSwiping resets session for a fresh round', async () => {
     await useSessionStore.getState().startNewSession();
+    await useSessionStore.getState().recordSwipe(testDish, 'like');
     await useSessionStore.getState().completeWithMatch({ top3: [], spread: 0 });
     await useSessionStore.getState().continueSwiping();
     const s = useSessionStore.getState().session!;
     expect(s.status).toBe('active');
-    expect(s.likesTargetForNextMatch).toBe(20);
-    expect(s.swipeCapForNextMatch).toBe(70);
+    expect(s.likesTargetForNextMatch).toBe(10);
+    expect(s.swipeCapForNextMatch).toBe(40);
+    expect(s.seenDishIds).toEqual([]);
+    expect(s.likes).toEqual([]);
+    expect(s.dislikes).toEqual([]);
+    // Taste vector preserved from the swipe above (non-zero in at least one axis)
+    expect(s.tasteVector.some(v => v !== 0)).toBe(true);
   });
 
   it('resetSession clears it', async () => {
