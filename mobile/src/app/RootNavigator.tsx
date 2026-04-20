@@ -1,7 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-export const RootNavigator = () => (
-  <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-    <Text>Loading navigator…</Text>
-  </View>
-);
+import { NavigationContainer } from '@react-navigation/native';
+import { usePreferencesStore } from '@/domain/preferences/store';
+import { OnboardingStack } from './OnboardingStack';
+import { MainTabs } from './MainTabs';
+
+export const RootNavigator = () => {
+  const onboardingCompleted = usePreferencesStore(s => s.preferences.onboardingCompleted);
+  return (
+    <NavigationContainer>
+      {onboardingCompleted ? <MainTabs /> : <OnboardingStack />}
+    </NavigationContainer>
+  );
+};
