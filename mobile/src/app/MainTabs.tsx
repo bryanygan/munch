@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text } from 'react-native';
 import { SwipeScreen } from '@/features/discover/SwipeScreen';
+import { MatchRevealScreen } from '@/features/match/MatchRevealScreen';
 import { LikedGalleryScreen } from '@/features/matches/LikedGalleryScreen';
 import { ProfileScreen } from '@/features/profile/ProfileScreen';
 import { SettingsScreen } from '@/features/settings/SettingsScreen';
@@ -17,6 +18,11 @@ const SettingsStack = createNativeStackNavigator();
 const DiscoverNav = () => (
   <DiscoverStack.Navigator screenOptions={{ headerShown: false }}>
     <DiscoverStack.Screen name="Swipe" component={SwipeScreen} />
+    <DiscoverStack.Screen
+      name="MatchReveal"
+      component={MatchRevealScreen}
+      options={{ presentation: 'modal', animation: 'slide_from_bottom' }}
+    />
   </DiscoverStack.Navigator>
 );
 const MatchesNav = () => (
