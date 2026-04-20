@@ -36,16 +36,45 @@ export const SwipeScreen: React.FC = () => {
     [preferences],
   );
 
+  const triggerMatch = React.useCallback(async (updated: typeof session, poolSnapshot: Dish[]) => {
+    if (!updated) return;
+    const ctx = {
+      user: { tasteVector: updated.tasteVector, categoricalCounts: updated.categoricalCounts },
+      session: updated, now: new Date(),
+    };
+    const unseen = poolSnapshot.filter(d => !updated.seenDishIds.includes(d.id));
+    const matchPool = unseen.length > 0 ? unseen : poolSnapshot;
+    const match = engine.matchTop3(matchPool, ctx);
+    await completeWithMatch(match);
+    haptic.success();
+    nav.navigate('MatchReveal');
+  }, [completeWithMatch, haptic, nav]);
+
+  // Only start a new session when there is no session at all.
   useEffect(() => {
-    if (!session || session.status === 'completed') {
+    if (!session) {
       startNewSession();
     }
-  }, [session?.id, session?.status]);
+  }, [session]);
+
+  // If we land here with a completed session, navigate to MatchReveal.
+  useEffect(() => {
+    if (session?.status === 'completed' && session.completedMatch) {
+      nav.navigate('MatchReveal');
+    }
+  }, [session?.status, session?.completedMatch, nav]);
 
   const remaining = useMemo(() => {
     if (!session) return [];
     return pool.filter(d => !session.seenDishIds.includes(d.id));
   }, [pool, session]);
+
+  // If the pool exhausts mid-session and there's at least one like, trigger a match.
+  useEffect(() => {
+    if (session && session.status === 'active' && remaining.length === 0 && session.likes.length > 0) {
+      triggerMatch(session, pool);
+    }
+  }, [session, remaining.length, pool, triggerMatch]);
 
   useEffect(() => {
     if (!session || remaining.length === 0) {
@@ -76,24 +105,13 @@ export const SwipeScreen: React.FC = () => {
     if (direction === 'like') {
       await recordLike(currentDish.id, session.id);
     }
-
     const updated = useSessionStore.getState().session;
     if (!updated) return;
     const totalSwipes = updated.likes.length + updated.dislikes.length;
     const hitLikes = updated.likes.length >= updated.likesTargetForNextMatch;
     const hitCap = totalSwipes >= updated.swipeCapForNextMatch;
     if (hitLikes || hitCap) {
-      const ctx = {
-        user: { tasteVector: updated.tasteVector, categoricalCounts: updated.categoricalCounts },
-        session: updated, now: new Date(),
-      };
-      const matchPool = pool.filter(d => !updated.seenDishIds.includes(d.id)).length > 0
-        ? pool.filter(d => !updated.seenDishIds.includes(d.id))
-        : pool;
-      const match = engine.matchTop3(matchPool, ctx);
-      await completeWithMatch(match);
-      haptic.success();
-      nav.navigate('MatchReveal');
+      await triggerMatch(updated, pool);
     }
   };
 
@@ -106,11 +124,21 @@ export const SwipeScreen: React.FC = () => {
   }
 
   if (remaining.length === 0 || !currentDish) {
+    if (session.likes.length === 0) {
+      return (
+        <SafeAreaView style={styles.root}>
+          <View style={styles.empty}>
+            <Text style={styles.emptyTitle}>Nothing matches your filters.</Text>
+            <Text style={styles.emptyBody}>Loosen filters in Settings to see more dishes.</Text>
+          </View>
+        </SafeAreaView>
+      );
+    }
+    // Pool exhausted with likes — triggerMatch effect is in flight, show brief loading state.
     return (
       <SafeAreaView style={styles.root}>
         <View style={styles.empty}>
-          <Text style={styles.emptyTitle}>You've seen everything matching your filters.</Text>
-          <Text style={styles.emptyBody}>Loosen filters in Settings or start a new session.</Text>
+          <Text style={styles.emptyTitle}>Finding your match…</Text>
         </View>
       </SafeAreaView>
     );
