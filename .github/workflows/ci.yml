@@ -32,4 +32,3 @@ jobs:
 
       - name: Validate foods.json
         run: node scripts/validate-foods.mjs
-        continue-on-error: true  # will be made hard-fail after Task C lands validator
