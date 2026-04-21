@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { View, Text, StyleSheet, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Pressable, AccessibilityInfo } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { colors, radius, spacing, typography } from '@/shared/theme';
@@ -23,13 +23,14 @@ export const SettingsScreen: React.FC = () => {
     tapCount.current += 1;
     if (tapCount.current >= UNLOCK_TAPS && !devUnlocked) {
       setDevUnlocked(true);
+      AccessibilityInfo.announceForAccessibility('Dev menu unlocked');
     }
   };
 
   return (
     <SafeAreaView style={styles.root}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Pressable onPress={handleTitleTap} hitSlop={8}>
+        <Pressable onPress={handleTitleTap} hitSlop={8} accessibilityHint="Tap five times to reveal developer options">
           <Text style={styles.title}>Settings</Text>
         </Pressable>
         <SettingRow label="Dietary filters" onPress={() => nav.navigate('Filters')} />

@@ -91,7 +91,7 @@ export const Confetti: React.FC = () => {
     []
   );
   return (
-    <View style={StyleSheet.absoluteFill} pointerEvents="none">
+    <View style={StyleSheet.absoluteFill} pointerEvents="none" accessibilityElementsHidden importantForAccessibility="no-hide-descendants">
       {specs.map((spec, i) => (
         <Particle key={i} spec={spec} />
       ))}

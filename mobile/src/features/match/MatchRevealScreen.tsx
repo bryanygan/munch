@@ -98,7 +98,11 @@ export const MatchRevealScreen: React.FC = () => {
 };
 
 const HeroCard: React.FC<{ entry: MatchEntry }> = ({ entry }) => (
-  <View style={styles.hero}>
+  <View
+    style={styles.hero}
+    accessible
+    accessibilityLabel={`Top match: ${entry.dish.name}, ${entry.matchPercent}% match. ${entry.dish.description}`}
+  >
     <DishImage uri={entry.dish.image_url} thumbhash={entry.dish.image_thumbhash} style={styles.heroImage} />
     <View style={styles.heroBody}>
       <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -111,7 +115,11 @@ const HeroCard: React.FC<{ entry: MatchEntry }> = ({ entry }) => (
 );
 
 const SecondaryCard: React.FC<{ entry: MatchEntry }> = ({ entry }) => (
-  <View style={styles.secondary}>
+  <View
+    style={styles.secondary}
+    accessible
+    accessibilityLabel={`Alternate match: ${entry.dish.name}, ${entry.matchPercent}% match`}
+  >
     <DishImage uri={entry.dish.image_url} thumbhash={entry.dish.image_thumbhash} style={styles.secondaryImage} />
     <View style={{ padding: spacing.md }}>
       <Text style={styles.secondaryName} numberOfLines={1}>{entry.dish.name}</Text>

@@ -186,8 +186,8 @@ export const SwipeScreen: React.FC = () => {
         />
       </View>
       <View style={styles.buttonsRow}>
-        <Button label="Nope" variant="secondary" size="lg" onPress={() => onSwipe('dislike')} />
-        <Button label="Yum" variant="primary" size="lg" onPress={() => onSwipe('like')} />
+        <Button label="Nope" variant="secondary" size="lg" onPress={() => onSwipe('dislike')} accessibilityHint="Pass on this dish" />
+        <Button label="Yum" variant="primary" size="lg" onPress={() => onSwipe('like')} accessibilityHint="Like this dish" />
       </View>
       <DetailsSheet dish={detailsDish} onClose={() => setDetailsDish(null)} />
     </SafeAreaView>

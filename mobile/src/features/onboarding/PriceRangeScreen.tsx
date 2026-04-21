@@ -56,7 +56,14 @@ const PriceColumn: React.FC<{ label: string; value: PriceTier; onChange: (v: Pri
     {TIERS.map(t => {
       const active = value === t;
       return (
-        <Pressable key={t} onPress={() => onChange(t)} style={[styles.tier, active && styles.tierActive]}>
+        <Pressable
+          key={t}
+          onPress={() => onChange(t)}
+          style={[styles.tier, active && styles.tierActive]}
+          accessibilityRole="radio"
+          accessibilityState={{ selected: active }}
+          accessibilityLabel={`Price tier ${t}, ${LABELS[t]}`}
+        >
           <Text style={[styles.tierLabel, active && styles.tierLabelActive]}>{LABELS[t]}</Text>
         </Pressable>
       );

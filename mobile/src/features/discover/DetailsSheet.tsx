@@ -12,10 +12,15 @@ type Props = {
 
 export const DetailsSheet: React.FC<Props> = ({ dish, onClose }) => {
   return (
-    <Modal animationType="slide" transparent visible={!!dish} onRequestClose={onClose}>
+    <Modal animationType="slide" transparent visible={!!dish} onRequestClose={onClose} accessibilityViewIsModal>
       <View style={styles.backdrop}>
         <View style={styles.sheet}>
-          <Pressable style={styles.grabber} onPress={onClose}>
+          <Pressable
+            style={styles.grabber}
+            onPress={onClose}
+            accessibilityRole="button"
+            accessibilityLabel="Close details"
+          >
             <View style={styles.grabberBar} />
           </Pressable>
           {dish ? (
