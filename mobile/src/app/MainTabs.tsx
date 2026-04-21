@@ -9,6 +9,7 @@ import { ProfileScreen } from '@/features/profile/ProfileScreen';
 import { SettingsScreen } from '@/features/settings/SettingsScreen';
 import { FiltersScreen } from '@/features/settings/FiltersScreen';
 import { DataScreen } from '@/features/settings/DataScreen';
+import { DevMenuScreen } from '@/features/settings/DevMenuScreen';
 import { colors } from '@/shared/theme';
 
 const Tab = createBottomTabNavigator();
@@ -42,6 +43,7 @@ const SettingsNav = () => (
     <SettingsStack.Screen name="Settings" component={SettingsScreen} />
     <SettingsStack.Screen name="Filters" component={FiltersScreen} options={{ title: 'Filters' }} />
     <SettingsStack.Screen name="Data" component={DataScreen} options={{ title: 'Data' }} />
+    <SettingsStack.Screen name="DevMenu" component={DevMenuScreen} options={{ title: 'Dev menu' }} />
   </SettingsStack.Navigator>
 );
 
