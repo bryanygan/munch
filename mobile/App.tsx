@@ -13,6 +13,7 @@ import { usePreferencesStore } from '@/domain/preferences/store';
 import { useSessionStore } from '@/domain/session/store';
 import { useLikedHistoryStore } from '@/domain/session/history';
 import { colors } from '@/shared/theme';
+import { ErrorBoundary } from '@/shared/components/ErrorBoundary';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -41,8 +42,10 @@ export default function App() {
     );
   }
   return (
-    <Providers>
-      <RootNavigator />
-    </Providers>
+    <ErrorBoundary>
+      <Providers>
+        <RootNavigator />
+      </Providers>
+    </ErrorBoundary>
   );
 }
