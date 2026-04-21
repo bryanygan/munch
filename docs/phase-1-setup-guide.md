@@ -301,3 +301,46 @@ Free tier: 1 million events/month, 1 year retention. Effectively infinite for MV
 3. Start **#4 today** — Apple enrollment takes 1–2 days to approve, so kick it off while you do everything else.
 
 While Apple is approving: knock out **#3**, **#5**, **#6** in parallel. By the time Apple greenlights, you can come back with: Cloudinary cloud name, Sentry DSN, PostHog key — and I'll wire everything up in one commit pass.
+
+---
+
+## When your keys arrive
+
+The app is pre-wired with no-op adapters. To connect real services:
+
+### Sentry
+1. `npx expo install @sentry/react-native`
+2. In `App.tsx`, before `export default`:
+   ```ts
+   import * as Sentry from '@sentry/react-native';
+   import { setErrorAdapter } from '@/shared/errorMonitoring';
+
+   Sentry.init({ dsn: process.env.EXPO_PUBLIC_SENTRY_DSN });
+   setErrorAdapter({
+     captureException: (error, ctx) => Sentry.captureException(error, { tags: ctx?.tags, extra: ctx?.extra }),
+     captureMessage: (msg, level) => Sentry.captureMessage(msg, level),
+     setUser: (user) => Sentry.setUser(user),
+     addBreadcrumb: (crumb) => Sentry.addBreadcrumb(crumb),
+   });
+   ```
+3. Add `EXPO_PUBLIC_SENTRY_DSN=<your-dsn>` to `.env` (and `.env.example`).
+
+### PostHog
+1. `npm install posthog-react-native`
+2. In `App.tsx`:
+   ```ts
+   import PostHog from 'posthog-react-native';
+   import { setAnalyticsAdapter } from '@/shared/analytics';
+
+   const posthog = new PostHog(process.env.EXPO_PUBLIC_POSTHOG_KEY!, {
+     host: process.env.EXPO_PUBLIC_POSTHOG_HOST,
+   });
+   setAnalyticsAdapter({
+     identify: (id, traits) => posthog.identify(id, traits),
+     track: (event) => posthog.capture(event.name, event),
+     reset: () => posthog.reset(),
+   });
+   ```
+3. Add `EXPO_PUBLIC_POSTHOG_KEY` + `EXPO_PUBLIC_POSTHOG_HOST` to `.env`.
+
+No other code changes required — every event is already firing.
