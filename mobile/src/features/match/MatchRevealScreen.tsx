@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, StyleSheet, ScrollView, Share } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from '@/shared/components/Button';
@@ -8,6 +8,17 @@ import { colors, radius, spacing, typography, shadow } from '@/shared/theme';
 import { useSessionStore } from '@/domain/session/store';
 import type { MatchEntry } from '@/domain/session/types';
 import { analytics } from '@/shared/analytics';
+import { useHaptic } from '@/shared/hooks/useHaptic';
+import { Confetti } from './Confetti';
+
+const ComingSoonButton: React.FC<{ label: string }> = ({ label }) => (
+  <View style={styles.comingSoonWrap}>
+    <Button label={label} size="lg" disabled />
+    <View style={styles.comingSoonBadge}>
+      <Text style={styles.comingSoonText}>SOON</Text>
+    </View>
+  </View>
+);
 
 export const MatchRevealScreen: React.FC = () => {
   const nav = useNavigation<any>();
@@ -15,6 +26,34 @@ export const MatchRevealScreen: React.FC = () => {
   const continueSwiping = useSessionStore(s => s.continueSwiping);
   const resetSession = useSessionStore(s => s.resetSession);
   const match = session?.completedMatch;
+  const haptic = useHaptic();
+
+  const [first, ...rest] = match?.top3 ?? [];
+
+  useEffect(() => {
+    // Haptic reveal pattern
+    haptic.success();
+    const t1 = setTimeout(() => haptic.tap(), 150);
+    const t2 = setTimeout(() => haptic.tap(), 350);
+    const t3 = setTimeout(() => haptic.tap(), 550);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
+  }, []);
+
+  const handleShare = async () => {
+    if (!first) return;
+    try {
+      await Share.share({
+        message: `My Munch match: ${first.dish.name} from ${first.dish.country} — ${first.matchPercent}% match 🍽️`,
+      });
+      analytics.track({ name: 'match_action', action: 'share', session_id: session!.id });
+    } catch {
+      // User canceled — no action
+    }
+  };
 
   if (!match || match.top3.length === 0) {
     return (
@@ -24,10 +63,9 @@ export const MatchRevealScreen: React.FC = () => {
     );
   }
 
-  const [first, ...rest] = match.top3;
-
   return (
     <SafeAreaView style={styles.root}>
+      <Confetti />
       <ScrollView contentContainerStyle={styles.content}>
         <Text style={styles.eyebrow}>It's a match!</Text>
         <Text style={styles.title}>Your top dish</Text>
@@ -40,13 +78,14 @@ export const MatchRevealScreen: React.FC = () => {
         </View>
 
         <View style={styles.actions}>
-          <Button label="Order now (coming soon)" size="lg" disabled />
-          <Button label="Find restaurants (coming soon)" size="lg" disabled />
+          <ComingSoonButton label="Order now" />
+          <ComingSoonButton label="Find restaurants" />
           <Button label="Keep swiping" variant="secondary" size="lg" onPress={async () => {
             analytics.track({ name: 'match_action', action: 'keep_swiping', session_id: session!.id });
             await continueSwiping();
             nav.goBack();
           }} />
+          <Button label="Share this match" variant="secondary" size="md" onPress={handleShare} />
           <Button label="Start over" variant="ghost" size="sm" onPress={async () => {
             analytics.track({ name: 'match_action', action: 'start_over', session_id: session!.id });
             await resetSession();
@@ -99,4 +138,20 @@ const styles = StyleSheet.create({
   secondaryName: { fontFamily: typography.fontFamily.bold, fontSize: typography.sizes.sm },
   secondaryPercent: { fontFamily: typography.fontFamily.regular, color: colors.primary, fontSize: typography.sizes.xs },
   actions: { gap: spacing.md, marginTop: spacing.lg },
+  comingSoonWrap: { position: 'relative' },
+  comingSoonBadge: {
+    position: 'absolute',
+    top: -6,
+    right: spacing.md,
+    backgroundColor: colors.primary,
+    paddingHorizontal: spacing.sm,
+    paddingVertical: 2,
+    borderRadius: radius.full,
+  },
+  comingSoonText: {
+    fontFamily: typography.fontFamily.extraBold,
+    fontSize: 9,
+    color: '#fff',
+    letterSpacing: 1,
+  },
 });
