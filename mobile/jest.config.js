@@ -6,6 +6,7 @@ module.exports = {
   ],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^react-native-reanimated$': '<rootDir>/node_modules/react-native-reanimated/mock',
+    // Use a hand-rolled mock that avoids react-native-worklets native init (Reanimated 4.x)
+    '^react-native-reanimated$': '<rootDir>/__mocks__/react-native-reanimated.js',
   },
 };
