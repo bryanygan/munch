@@ -7,6 +7,7 @@ import { DishImage } from '@/shared/components/DishImage';
 import { colors, radius, spacing, typography, shadow } from '@/shared/theme';
 import { useSessionStore } from '@/domain/session/store';
 import type { MatchEntry } from '@/domain/session/types';
+import { analytics } from '@/shared/analytics';
 
 export const MatchRevealScreen: React.FC = () => {
   const nav = useNavigation<any>();
@@ -42,10 +43,12 @@ export const MatchRevealScreen: React.FC = () => {
           <Button label="Order now (coming soon)" size="lg" disabled />
           <Button label="Find restaurants (coming soon)" size="lg" disabled />
           <Button label="Keep swiping" variant="secondary" size="lg" onPress={async () => {
+            analytics.track({ name: 'match_action', action: 'keep_swiping', session_id: session!.id });
             await continueSwiping();
             nav.goBack();
           }} />
           <Button label="Start over" variant="ghost" size="sm" onPress={async () => {
+            analytics.track({ name: 'match_action', action: 'start_over', session_id: session!.id });
             await resetSession();
             nav.goBack();
           }} />

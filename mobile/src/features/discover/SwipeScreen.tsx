@@ -14,6 +14,7 @@ import { useLikedHistoryStore } from '@/domain/session/history';
 import { dishRepository } from '@/domain/dish/repositoryInstance';
 import { createDefaultEngine } from '@/domain/recommendation/defaultEngine';
 import type { Dish } from '@/domain/dish/types';
+import { analytics } from '@/shared/analytics';
 
 const engine = createDefaultEngine();
 
@@ -45,6 +46,20 @@ export const SwipeScreen: React.FC = () => {
     const matchPool = unseen.length > 0 ? unseen : poolSnapshot;
     const match = engine.matchTop3(matchPool, ctx);
     await completeWithMatch(match);
+    const topMatch = match.top3[0];
+    if (topMatch) {
+      const updated2 = useSessionStore.getState().session;
+      if (updated2) {
+        analytics.track({
+          name: 'match_revealed',
+          session_id: updated2.id,
+          top_match_percent: topMatch.matchPercent,
+          top_match_dish_id: topMatch.dish.id,
+          likes_at_match: updated2.likes.length,
+          total_swipes_at_match: updated2.likes.length + updated2.dislikes.length,
+        });
+      }
+    }
     haptic.success();
     nav.navigate('MatchReveal');
   }, [completeWithMatch, haptic, nav]);
@@ -53,6 +68,11 @@ export const SwipeScreen: React.FC = () => {
   useEffect(() => {
     if (!session) {
       startNewSession();
+      // Fire after state settles — use a microtask so the new session id is available
+      Promise.resolve().then(() => {
+        const s = useSessionStore.getState().session;
+        if (s) analytics.track({ name: 'session_started', session_id: s.id });
+      });
     }
   }, [session]);
 
@@ -100,6 +120,15 @@ export const SwipeScreen: React.FC = () => {
       await recordLike(currentDish.id, session.id);
     }
     const updated = useSessionStore.getState().session;
+    if (updated) {
+      analytics.track({
+        name: 'swipe',
+        dish_id: currentDish.id,
+        direction,
+        session_id: updated.id,
+        swipe_index: updated.likes.length + updated.dislikes.length,
+      });
+    }
     if (!updated) return;
     const totalSwipes = updated.likes.length + updated.dislikes.length;
     const hitLikes = updated.likes.length >= updated.likesTargetForNextMatch;

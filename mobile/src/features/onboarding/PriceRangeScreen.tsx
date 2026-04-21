@@ -5,6 +5,7 @@ import { Button } from '@/shared/components/Button';
 import { colors, radius, spacing, typography } from '@/shared/theme';
 import { usePreferencesStore } from '@/domain/preferences/store';
 import type { PriceTier } from '@/domain/dish/types';
+import { analytics } from '@/shared/analytics';
 
 const TIERS: PriceTier[] = [1, 2, 3, 4];
 const LABELS: Record<PriceTier, string> = { 1: '$', 2: '$$', 3: '$$$', 4: '$$$$' };
@@ -20,6 +21,14 @@ export const PriceRangeScreen: React.FC = () => {
     const range: [PriceTier, PriceTier] = [Math.min(min, max) as PriceTier, Math.max(min, max) as PriceTier];
     await setPriceRange(range);
     await completeOnboarding();
+    const prefs = usePreferencesStore.getState().preferences;
+    analytics.track({
+      name: 'onboarding_completed',
+      allergen_count: prefs.allergens.length,
+      diet: prefs.diet,
+      price_min: range[0],
+      price_max: range[1],
+    });
   };
 
   return (
