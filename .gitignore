@@ -51,3 +51,10 @@ scripts/image-selections.json
 
 # Full-size original screenshots (optimized copies live in docs/screenshots)
 mobile/assets/screenshots/
+
+# Auto-pick outputs and embedding cache (generated locally)
+scripts/auto-selections.json
+scripts/auto-pick-report.json
+scripts/review-sheets/
+scripts/.cache/
+scripts/verified-selections.json

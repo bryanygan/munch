@@ -22,7 +22,7 @@ A working MVP, paused after the first round of Phase 1 hardening. It runs on a p
 
 Known limitations:
 
-- **Mostly placeholder images.** 10 dishes (e.g. salmon nigiri, takoyaki, tonkatsu, gyoza, mapo tofu, xiao long bao) have real photos from [Pexels](https://www.pexels.com/license/); the other 300 use seeded `picsum.photos` photos, which are random and don't depict the dish. The tooling for replacing them is built (see [Content tooling](#content-tooling)) but the full picking pass hasn't been done.
+- **Some placeholder images.** 188 of the 332 dishes have real photos (mostly from [Pexels](https://www.pexels.com/license/), picked by a local CLIP model and then eyeballed). The other 144 use seeded `picsum.photos` photos, which are random and don't depict the dish. Candidates for those exist but need a manual pass (see [Content tooling](#content-tooling)).
 - **Analytics and error monitoring are no-ops.** The adapters are wired in; PostHog/Sentry just aren't plugged in yet.
 - **Expo Go only.** No EAS dev build or store release yet.
 
@@ -103,8 +103,11 @@ Dishes live in `mobile/src/data/foods.json`. Scripts in `scripts/` (run from the
 npm run validate-foods            # schema, duplicates, flavor sanity; also run in CI
 npm run compute-thumbhashes       # regenerate blurred image placeholders
 npm run fetch-image-candidates    # needs PEXELS_API_KEY in .env; writes scripts/image-candidates.js
+npm run auto-pick-images          # CLIP scores every candidate against the dish name; writes scripts/auto-selections.json,
+                                  # a report, and contact sheets (scripts/review-sheets/) for dishes that need a human look
 # open scripts/image-picker.html in a browser, pick a photo per dish, then download image-selections.json
-npm run apply-image-selections    # write the picks into foods.json
+#   (or review the auto-pick contact sheets; labels match the picker's candidate numbers and 1-9 hotkeys)
+npm run apply-image-selections    # write the picks into foods.json (pass a path to use auto-selections.json)
 ```
 
 ## Docs
