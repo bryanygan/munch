@@ -58,3 +58,5 @@ scripts/auto-pick-report.json
 scripts/review-sheets/
 scripts/.cache/
 scripts/verified-selections.json
+scripts/manual-selections.json
+scripts/.manual-picks.json
