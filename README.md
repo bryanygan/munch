@@ -93,7 +93,7 @@ Dishes live in `mobile/src/data/foods.json`. Scripts in `scripts/` (run from the
 npm run validate-foods            # schema, duplicates, flavor sanity; also run in CI
 npm run compute-thumbhashes       # regenerate blurred image placeholders
 npm run fetch-image-candidates    # needs PEXELS_API_KEY in .env; writes scripts/image-candidates.js
-open scripts/image-picker.html    # pick a photo per dish, then download image-selections.json
+# open scripts/image-picker.html in a browser, pick a photo per dish, then download image-selections.json
 npm run apply-image-selections    # write the picks into foods.json
 ```
 
@@ -113,3 +113,7 @@ npm run apply-image-selections    # write the picks into foods.json
 - **expo-haptics**, **expo-blur**, **expo-image**
 - **Plus Jakarta Sans** via `@expo-google-fonts`
 - **Jest** + **@testing-library/react-native** + **fast-check**
+
+## License
+
+[MIT](LICENSE)
