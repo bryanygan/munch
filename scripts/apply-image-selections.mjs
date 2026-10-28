@@ -39,6 +39,7 @@ for (const [id, url] of Object.entries(selections)) {
   if (!url || typeof url !== 'string') continue;
   if (d.image_url === url) { unchanged++; continue; }
   d.image_url = url;
+  d.image_thumbhash = ''; // stale for the new image; compute-thumbhashes refills it
   applied++;
 }
 
@@ -53,5 +54,5 @@ console.log(`  Applied: ${applied}`);
 console.log(`  Unchanged (already matched): ${unchanged}`);
 console.log(`  Still placeholders (no selection yet): ${missing}`);
 if (unknown.length) console.log(`  Unknown dish IDs in selections: ${unknown.join(', ')}`);
-console.log(`\nNext: run \`node scripts/compute-thumbhashes.mjs\` to regenerate thumbhashes.`);
+console.log(`\nNext: run \`node scripts/compute-thumbhashes.mjs\` to refill thumbhashes (cleared for changed dishes).`);
 console.log(`Then: \`node scripts/validate-foods.mjs\` to confirm.`);
