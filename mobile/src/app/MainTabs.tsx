@@ -9,6 +9,7 @@ import { ProfileScreen } from '@/features/profile/ProfileScreen';
 import { SettingsScreen } from '@/features/settings/SettingsScreen';
 import { FiltersScreen } from '@/features/settings/FiltersScreen';
 import { DataScreen } from '@/features/settings/DataScreen';
+import { DevMenuScreen } from '@/features/settings/DevMenuScreen';
 import { colors } from '@/shared/theme';
 
 const Tab = createBottomTabNavigator();
@@ -42,6 +43,7 @@ const SettingsNav = () => (
     <SettingsStack.Screen name="Settings" component={SettingsScreen} />
     <SettingsStack.Screen name="Filters" component={FiltersScreen} options={{ title: 'Filters' }} />
     <SettingsStack.Screen name="Data" component={DataScreen} options={{ title: 'Data' }} />
+    <SettingsStack.Screen name="DevMenu" component={DevMenuScreen} options={{ title: 'Dev menu' }} />
   </SettingsStack.Navigator>
 );
 
@@ -57,22 +59,34 @@ export const MainTabs = () => (
     <Tab.Screen
       name="Discover"
       component={DiscoverNav}
-      options={{ tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 22 }}>🔥</Text> }}
+      options={{
+        tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 22 }} accessibilityElementsHidden importantForAccessibility="no">🔥</Text>,
+        tabBarAccessibilityLabel: 'Discover, tab 1 of 4',
+      }}
     />
     <Tab.Screen
       name="Matches"
       component={MatchesNav}
-      options={{ tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 22 }}>♥</Text> }}
+      options={{
+        tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 22 }} accessibilityElementsHidden importantForAccessibility="no">♥</Text>,
+        tabBarAccessibilityLabel: 'Matches, tab 2 of 4',
+      }}
     />
     <Tab.Screen
       name="Profile"
       component={ProfileNav}
-      options={{ tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 22 }}>👤</Text> }}
+      options={{
+        tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 22 }} accessibilityElementsHidden importantForAccessibility="no">👤</Text>,
+        tabBarAccessibilityLabel: 'Profile, tab 3 of 4',
+      }}
     />
     <Tab.Screen
       name="Settings"
       component={SettingsNav}
-      options={{ tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 22 }}>⚙</Text> }}
+      options={{
+        tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 22 }} accessibilityElementsHidden importantForAccessibility="no">⚙</Text>,
+        tabBarAccessibilityLabel: 'Settings, tab 4 of 4',
+      }}
     />
   </Tab.Navigator>
 );

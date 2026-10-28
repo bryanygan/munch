@@ -77,8 +77,13 @@ export const SwipeCard: React.FC<Props> = ({ dish, onSwipe, onPressDetails, inte
 
   return (
     <GestureDetector gesture={pan}>
-      <Animated.View style={[styles.card, cardStyle]}>
-        <DishImage uri={dish.image_url} blurhash={dish.image_blurhash} style={StyleSheet.absoluteFillObject} />
+      <Animated.View
+        style={[styles.card, cardStyle]}
+        accessible
+        accessibilityLabel={`${dish.name} from ${dish.country}. ${dish.description} Price tier ${dish.price_tier}.`}
+        accessibilityHint="Swipe right with two fingers to like, left to pass, or use the Yum and Nope buttons below the card."
+      >
+        <DishImage uri={dish.image_url} thumbhash={dish.image_thumbhash} style={StyleSheet.absoluteFill} />
         <View style={styles.darkGradient} pointerEvents="none" />
 
         <Animated.View style={[styles.badge, styles.badgeNope, nopeStyle]} pointerEvents="none">
@@ -101,7 +106,12 @@ export const SwipeCard: React.FC<Props> = ({ dish, onSwipe, onPressDetails, inte
             <Text style={styles.name}>{dish.name}</Text>
             <View style={styles.bottomRow}>
               <Text style={styles.price}>{'$'.repeat(dish.price_tier)}</Text>
-              <Pressable onPress={onPressDetails} hitSlop={12}>
+              <Pressable
+                onPress={onPressDetails}
+                hitSlop={12}
+                accessibilityRole="button"
+                accessibilityLabel="View dish details"
+              >
                 <Text style={styles.detailsLink}>View details ›</Text>
               </Pressable>
             </View>

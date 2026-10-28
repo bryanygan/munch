@@ -16,7 +16,7 @@ const dish = (id: string, popularity: 1|2|3|4|5 = 3, region: CuisineRegion = 'no
     eggs: false, pork: false, beef: false, alcohol: false,
   },
   diet_compatible: [], price_tier: 2, prep_complexity: 'low',
-  popularity, image_url: '', image_blurhash: '', tags: [],
+  popularity, image_url: '', image_thumbhash: '', tags: [],
 });
 
 const session = createSwipeSession();

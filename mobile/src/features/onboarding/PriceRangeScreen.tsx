@@ -5,6 +5,7 @@ import { Button } from '@/shared/components/Button';
 import { colors, radius, spacing, typography } from '@/shared/theme';
 import { usePreferencesStore } from '@/domain/preferences/store';
 import type { PriceTier } from '@/domain/dish/types';
+import { analytics } from '@/shared/analytics';
 
 const TIERS: PriceTier[] = [1, 2, 3, 4];
 const LABELS: Record<PriceTier, string> = { 1: '$', 2: '$$', 3: '$$$', 4: '$$$$' };
@@ -20,6 +21,14 @@ export const PriceRangeScreen: React.FC = () => {
     const range: [PriceTier, PriceTier] = [Math.min(min, max) as PriceTier, Math.max(min, max) as PriceTier];
     await setPriceRange(range);
     await completeOnboarding();
+    const prefs = usePreferencesStore.getState().preferences;
+    analytics.track({
+      name: 'onboarding_completed',
+      allergen_count: prefs.allergens.length,
+      diet: prefs.diet,
+      price_min: range[0],
+      price_max: range[1],
+    });
   };
 
   return (
@@ -47,7 +56,14 @@ const PriceColumn: React.FC<{ label: string; value: PriceTier; onChange: (v: Pri
     {TIERS.map(t => {
       const active = value === t;
       return (
-        <Pressable key={t} onPress={() => onChange(t)} style={[styles.tier, active && styles.tierActive]}>
+        <Pressable
+          key={t}
+          onPress={() => onChange(t)}
+          style={[styles.tier, active && styles.tierActive]}
+          accessibilityRole="radio"
+          accessibilityState={{ selected: active }}
+          accessibilityLabel={`Price tier ${t}, ${LABELS[t]}`}
+        >
           <Text style={[styles.tierLabel, active && styles.tierLabelActive]}>{LABELS[t]}</Text>
         </Pressable>
       );

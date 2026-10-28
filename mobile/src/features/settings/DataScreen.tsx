@@ -6,6 +6,7 @@ import { colors, spacing, typography } from '@/shared/theme';
 import { useSessionStore } from '@/domain/session/store';
 import { useLikedHistoryStore } from '@/domain/session/history';
 import { usePreferencesStore } from '@/domain/preferences/store';
+import { analytics } from '@/shared/analytics';
 
 export const DataScreen: React.FC = () => {
   const confirmReset = (title: string, body: string, fn: () => Promise<void>) => {
@@ -25,7 +26,10 @@ export const DataScreen: React.FC = () => {
           onPress={() => confirmReset(
             'Reset session?',
             'Your current swipe session will be cleared. Liked history is preserved.',
-            () => useSessionStore.getState().resetSession(),
+            async () => {
+              analytics.track({ name: 'data_reset', scope: 'session' });
+              await useSessionStore.getState().resetSession();
+            },
           )}
         />
         <Button
@@ -34,7 +38,10 @@ export const DataScreen: React.FC = () => {
           onPress={() => confirmReset(
             'Clear liked history?',
             'All your liked dishes will be removed from the Matches gallery.',
-            () => useLikedHistoryStore.getState().reset(),
+            async () => {
+              analytics.track({ name: 'data_reset', scope: 'history' });
+              await useLikedHistoryStore.getState().reset();
+            },
           )}
         />
         <Button
@@ -44,6 +51,7 @@ export const DataScreen: React.FC = () => {
             'Reset everything?',
             'Preferences, session, and liked history will all be cleared. You will go through onboarding again.',
             async () => {
+              analytics.track({ name: 'data_reset', scope: 'all' });
               await useSessionStore.getState().resetSession();
               await useLikedHistoryStore.getState().reset();
               await usePreferencesStore.getState().reset();

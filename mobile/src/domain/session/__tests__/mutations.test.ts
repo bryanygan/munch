@@ -13,7 +13,7 @@ const d = (overrides: Partial<Dish> = {}): Dish => ({
     eggs: false, pork: false, beef: false, alcohol: false,
   },
   diet_compatible: ['vegetarian'], price_tier: 2, prep_complexity: 'low',
-  popularity: 3, image_url: '', image_blurhash: '', tags: [],
+  popularity: 3, image_url: '', image_thumbhash: '', tags: [],
   ...overrides,
 });
 

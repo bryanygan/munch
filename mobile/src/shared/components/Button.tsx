@@ -15,11 +15,14 @@ type Props = {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   style?: ViewStyle;
+  accessibilityHint?: string;
+  accessibilityLabel?: string;
 };
 
 export const Button: React.FC<Props> = ({
   label, onPress, variant = 'primary', size = 'md',
   disabled, loading, leftIcon, rightIcon, style,
+  accessibilityHint, accessibilityLabel,
 }) => {
   const containerStyle = [
     styles.base,
@@ -43,7 +46,9 @@ export const Button: React.FC<Props> = ({
       disabled={disabled || loading}
       style={({ pressed }) => [containerStyle, pressed && styles.pressed]}
       accessibilityRole="button"
-      accessibilityState={{ disabled: !!disabled }}
+      accessibilityState={{ disabled: !!(disabled || loading) }}
+      accessibilityLabel={accessibilityLabel ?? label}
+      accessibilityHint={accessibilityHint}
     >
       {loading
         ? <ActivityIndicator color={variant === 'primary' ? '#fff' : colors.primary} />

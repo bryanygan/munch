@@ -7,6 +7,7 @@ import { Toggle } from '@/shared/components/Toggle';
 import { usePreferencesStore } from '@/domain/preferences/store';
 import type { AllergenKey, Diet, PriceTier } from '@/domain/dish/types';
 import { colors, radius, spacing, typography } from '@/shared/theme';
+import { analytics } from '@/shared/analytics';
 
 const ALLERGENS: Array<{ key: AllergenKey; label: string }> = [
   { key: 'gluten', label: 'Gluten' }, { key: 'dairy', label: 'Dairy' },
@@ -27,6 +28,16 @@ export const FiltersScreen: React.FC = () => {
   const [priceMax, setPriceMax] = useState<PriceTier>(prefs.priceRange[1]);
 
   const save = async () => {
+    const prevAllergens = new Set(prefs.allergens);
+    const nextAllergens = new Set(selected);
+    const added = selected.filter(a => !prevAllergens.has(a));
+    const removed = [...prevAllergens].filter(a => !nextAllergens.has(a));
+    analytics.track({
+      name: 'filters_changed',
+      allergens_added: added,
+      allergens_removed: removed,
+      diet: diet === 'none' ? null : diet,
+    });
     await setAllergens(selected);
     await setDiet(diet === 'none' ? null : diet);
     await setPriceRange([prefs.priceRange[0], priceMax]);

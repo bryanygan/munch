@@ -18,7 +18,7 @@ describe('foods.json', () => {
       'id', 'name', 'description', 'country', 'cuisine_region', 'flavor',
       'textures', 'meal_types', 'temperature', 'typical_time', 'contains',
       'diet_compatible', 'price_tier', 'prep_complexity', 'popularity',
-      'image_url', 'image_blurhash', 'tags',
+      'image_url', 'image_thumbhash', 'tags',
     ];
     for (const dish of foods as Dish[]) {
       for (const field of required) {

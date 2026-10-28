@@ -55,7 +55,11 @@ export const AllergenPickerScreen: React.FC = () => {
         <View style={styles.list}>
           <View style={styles.row}>
             <Text style={styles.rowLabel}>No allergies or restrictions</Text>
-            <Toggle value={noneSelected} onValueChange={onNoneToggle} />
+            <Toggle
+              value={noneSelected}
+              onValueChange={onNoneToggle}
+              accessibilityLabel={`No allergies or restrictions — ${noneSelected ? 'selected' : 'not selected'}`}
+            />
           </View>
           {ALLERGENS.map(({ key, label }) => (
             <View key={key} style={styles.row}>
@@ -63,6 +67,7 @@ export const AllergenPickerScreen: React.FC = () => {
               <Toggle
                 value={!noneSelected && selected.includes(key)}
                 onValueChange={() => toggle(key)}
+                accessibilityLabel={`${label} — ${selected.includes(key) ? 'excluded from matches' : 'allowed in matches'}`}
               />
             </View>
           ))}

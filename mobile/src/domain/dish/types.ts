@@ -48,7 +48,7 @@ export type Dish = {
   prep_complexity: 'low' | 'medium' | 'high';
   popularity: 1 | 2 | 3 | 4 | 5;
   image_url: string;
-  image_blurhash: string;
+  image_thumbhash: string;
   tags: string[];
 };
 

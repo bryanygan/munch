@@ -6,9 +6,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { Button } from '@/shared/components/Button';
 import { colors, spacing, typography } from '@/shared/theme';
 import type { OnboardingParamList } from '@/app/OnboardingStack';
+import { analytics } from '@/shared/analytics';
 
 export const WelcomeScreen: React.FC = () => {
   const nav = useNavigation<NativeStackNavigationProp<OnboardingParamList>>();
+  React.useEffect(() => { analytics.track({ name: 'onboarding_started' }); }, []);
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.content}>

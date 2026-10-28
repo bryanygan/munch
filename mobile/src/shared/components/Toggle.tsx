@@ -5,9 +5,10 @@ import { colors, radius } from '@/shared/theme';
 type Props = {
   value: boolean;
   onValueChange: (v: boolean) => void;
+  accessibilityLabel?: string;
 };
 
-export const Toggle: React.FC<Props> = ({ value, onValueChange }) => {
+export const Toggle: React.FC<Props> = ({ value, onValueChange, accessibilityLabel }) => {
   const anim = React.useRef(new Animated.Value(value ? 1 : 0)).current;
   React.useEffect(() => {
     Animated.timing(anim, { toValue: value ? 1 : 0, duration: 180, useNativeDriver: false }).start();
@@ -15,7 +16,7 @@ export const Toggle: React.FC<Props> = ({ value, onValueChange }) => {
   const translate = anim.interpolate({ inputRange: [0, 1], outputRange: [2, 24] });
   const bg = anim.interpolate({ inputRange: [0, 1], outputRange: ['#cbd5e1', colors.primary] });
   return (
-    <Pressable onPress={() => onValueChange(!value)} accessibilityRole="switch" accessibilityState={{ checked: value }}>
+    <Pressable onPress={() => onValueChange(!value)} accessibilityRole="switch" accessibilityState={{ checked: value }} accessibilityLabel={accessibilityLabel}>
       <Animated.View style={[styles.track, { backgroundColor: bg }]}>
         <Animated.View style={[styles.thumb, { transform: [{ translateX: translate }] }]} />
       </Animated.View>

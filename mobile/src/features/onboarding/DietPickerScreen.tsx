@@ -44,6 +44,9 @@ export const DietPickerScreen: React.FC = () => {
                 key={opt.key}
                 onPress={() => setSelected(opt.key)}
                 style={[styles.option, active && styles.optionActive]}
+                accessibilityRole="radio"
+                accessibilityState={{ selected: active }}
+                accessibilityLabel={opt.desc ? `${opt.label}, ${opt.desc}` : opt.label}
               >
                 <Text style={[styles.optionLabel, active && styles.optionLabelActive]}>{opt.label}</Text>
                 {opt.desc ? <Text style={styles.optionDesc}>{opt.desc}</Text> : null}
