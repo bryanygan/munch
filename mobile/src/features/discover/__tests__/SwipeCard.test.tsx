@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react-native';
+import { render as rtlRender, fireEvent } from '@testing-library/react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { SwipeCard } from '@/features/discover/SwipeCard';
 import type { Dish } from '@/domain/dish/types';
 
@@ -26,6 +27,9 @@ const testDish: Dish = {
   image_thumbhash: '',
   tags: ['coconut', 'rice'],
 };
+
+// GestureDetector requires a GestureHandlerRootView ancestor (enforced since gesture-handler 3).
+const render = (ui: React.ReactElement) => rtlRender(ui, { wrapper: GestureHandlerRootView });
 
 describe('SwipeCard', () => {
   it('renders dish name and description', () => {

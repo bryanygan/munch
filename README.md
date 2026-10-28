@@ -6,13 +6,23 @@ Built with Expo + React Native (New Architecture), TypeScript, Zustand, and Rean
 
 ![CI](https://github.com/bryanygan/munch/actions/workflows/ci.yml/badge.svg)
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/discover.png" width="180" alt="Discover: swipe card with match-potential bar" />
+  <img src="docs/screenshots/details.png" width="180" alt="Dish details sheet with flavor profile" />
+  <img src="docs/screenshots/liked-foods.png" width="180" alt="Liked foods gallery" />
+  <img src="docs/screenshots/profile.png" width="180" alt="Profile stats" />
+  <img src="docs/screenshots/filters.png" width="180" alt="Allergen filters" />
+</p>
+
 ## Status
 
 A working MVP, paused after the first round of Phase 1 hardening. It runs on a phone via Expo Go, is entirely local (no backend, accounts, or restaurant data), and has 332 curated dishes. Typecheck, 112 tests, and the dish-data validator all pass in CI.
 
 Known limitations:
 
-- **Placeholder images.** 310 of the 332 dishes use seeded `picsum.photos` photos, which are random and don't depict the dish. The tooling for replacing them is built (see [Content tooling](#content-tooling)) but the picking pass hasn't been done.
+- **Mostly placeholder images.** 10 dishes (e.g. salmon nigiri, takoyaki, tonkatsu, gyoza, mapo tofu, xiao long bao) have real photos from [Pexels](https://www.pexels.com/license/); the other 300 use seeded `picsum.photos` photos, which are random and don't depict the dish. The tooling for replacing them is built (see [Content tooling](#content-tooling)) but the full picking pass hasn't been done.
 - **Analytics and error monitoring are no-ops.** The adapters are wired in; PostHog/Sentry just aren't plugged in yet.
 - **Expo Go only.** No EAS dev build or store release yet.
 
@@ -59,7 +69,7 @@ Domain logic is deliberately isolated from UI — the recommendation engine, dis
 
 ## Getting started
 
-Requires Node 20+ and the Expo toolchain.
+Requires Node 22+ and the Expo toolchain.
 
 ```bash
 cd mobile
@@ -105,11 +115,11 @@ npm run apply-image-selections    # write the picks into foods.json
 
 ## Tech stack
 
-- **Expo SDK 54** with the New Architecture enabled
-- **React 19** / **React Native 0.81**
+- **Expo SDK 58** with the New Architecture enabled
+- **React 19** / **React Native 0.88**
 - **React Navigation** (native-stack + bottom-tabs)
 - **Zustand** for state, **AsyncStorage** for persistence
-- **Reanimated 4** + **Gesture Handler** for swipe interactions
+- **Reanimated 4** + **Gesture Handler 3** for swipe interactions
 - **expo-haptics**, **expo-blur**, **expo-image**
 - **Plus Jakarta Sans** via `@expo-google-fonts`
 - **Jest** + **@testing-library/react-native** + **fast-check**

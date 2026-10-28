@@ -1,7 +1,7 @@
 # Munch Roadmap — MVP → Production
 
 **Last updated:** 2026-10-28
-**Current state:** MVP complete (`feature/mobile-mvp` branch, PR #1). Runs on iPhone via Expo Go. Local-only (AsyncStorage). 332 dishes (310 still use `picsum.photos` placeholder images; the image-picking tooling is in `scripts/`). Analytics and error monitoring are pre-wired as no-op adapters. No auth, no restaurants, no delivery, no social.
+**Current state:** MVP complete (`feature/mobile-mvp` branch, PR #1). Runs on iPhone via Expo Go. Local-only (AsyncStorage). 332 dishes (300 still use `picsum.photos` placeholder images; the image-picking tooling is in `scripts/`). Analytics and error monitoring are pre-wired as no-op adapters. No auth, no restaurants, no delivery, no social.
 **Target:** Public launch on App Store (iOS) + Play Store (Android) with cloud accounts, real restaurant data, and essential ops infrastructure.
 
 This document is a living roadmap. Phase estimates are for a solo developer working evenings/weekends — scale accordingly if the team grows. Each phase has an exit criterion that must be met before starting the next.

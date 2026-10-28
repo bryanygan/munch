@@ -83,7 +83,7 @@ export const SwipeCard: React.FC<Props> = ({ dish, onSwipe, onPressDetails, inte
         accessibilityLabel={`${dish.name} from ${dish.country}. ${dish.description} Price tier ${dish.price_tier}.`}
         accessibilityHint="Swipe right with two fingers to like, left to pass, or use the Yum and Nope buttons below the card."
       >
-        <DishImage uri={dish.image_url} thumbhash={dish.image_thumbhash} style={StyleSheet.absoluteFillObject} />
+        <DishImage uri={dish.image_url} thumbhash={dish.image_thumbhash} style={StyleSheet.absoluteFill} />
         <View style={styles.darkGradient} pointerEvents="none" />
 
         <Animated.View style={[styles.badge, styles.badgeNope, nopeStyle]} pointerEvents="none">
