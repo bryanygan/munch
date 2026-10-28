@@ -59,7 +59,7 @@ Domain logic is deliberately isolated from UI — the recommendation engine, dis
 
 ## Getting started
 
-Requires Node 20+ and the Expo toolchain.
+Requires Node 22+ and the Expo toolchain.
 
 ```bash
 cd mobile
@@ -105,11 +105,11 @@ npm run apply-image-selections    # write the picks into foods.json
 
 ## Tech stack
 
-- **Expo SDK 54** with the New Architecture enabled
-- **React 19** / **React Native 0.81**
+- **Expo SDK 58** with the New Architecture enabled
+- **React 19** / **React Native 0.88**
 - **React Navigation** (native-stack + bottom-tabs)
 - **Zustand** for state, **AsyncStorage** for persistence
-- **Reanimated 4** + **Gesture Handler** for swipe interactions
+- **Reanimated 4** + **Gesture Handler 3** for swipe interactions
 - **expo-haptics**, **expo-blur**, **expo-image**
 - **Plus Jakarta Sans** via `@expo-google-fonts`
 - **Jest** + **@testing-library/react-native** + **fast-check**

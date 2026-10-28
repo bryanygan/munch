@@ -12,7 +12,7 @@ Do them in the order listed. Each builds on the previous.
 
 **Why:** The MVP's `image_thumbhash` values are placeholder strings. Real thumbhashes give pretty blurred previews while CDN images load.
 
-**Prerequisites:** Node 20 installed, network access.
+**Prerequisites:** Node 22 installed, network access.
 
 **Steps:**
 

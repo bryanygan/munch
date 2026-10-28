@@ -1,5 +1,6 @@
 import React from 'react';
-import { render, waitFor, act } from '@testing-library/react-native';
+import { render as rtlRender, waitFor, act } from '@testing-library/react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -61,6 +62,9 @@ const renderWithNav = () =>
   );
 
 // ─── test suite ───────────────────────────────────────────────────────────────
+// GestureDetector requires a GestureHandlerRootView ancestor (enforced since gesture-handler 3).
+const render = (ui: React.ReactElement) => rtlRender(ui, { wrapper: GestureHandlerRootView });
+
 describe('SwipeScreen', () => {
   beforeEach(async () => {
     await AsyncStorage.clear();
