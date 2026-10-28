@@ -12,7 +12,7 @@ A working MVP, paused after the first round of Phase 1 hardening. It runs on a p
 
 Known limitations:
 
-- **Placeholder images.** 310 of the 332 dishes use seeded `picsum.photos` photos, which are random and don't depict the dish. The tooling for replacing them is built (see [Content tooling](#content-tooling)) but the picking pass hasn't been done.
+- **Mostly placeholder images.** 10 dishes (e.g. salmon nigiri, takoyaki, tonkatsu, gyoza, mapo tofu, xiao long bao) have real photos from [Pexels](https://www.pexels.com/license/); the other 300 use seeded `picsum.photos` photos, which are random and don't depict the dish. The tooling for replacing them is built (see [Content tooling](#content-tooling)) but the full picking pass hasn't been done.
 - **Analytics and error monitoring are no-ops.** The adapters are wired in; PostHog/Sentry just aren't plugged in yet.
 - **Expo Go only.** No EAS dev build or store release yet.
 
