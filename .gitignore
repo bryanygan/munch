@@ -48,3 +48,6 @@ scripts/image-selections.json
 
 # Playwright MCP scratch output
 .playwright-mcp/
+
+# Full-size original screenshots (optimized copies live in docs/screenshots)
+mobile/assets/screenshots/

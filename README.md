@@ -6,6 +6,16 @@ Built with Expo + React Native (New Architecture), TypeScript, Zustand, and Rean
 
 ![CI](https://github.com/bryanygan/munch/actions/workflows/ci.yml/badge.svg)
 
+## Screenshots
+
+<p align="center">
+  <img src="docs/screenshots/discover.png" width="180" alt="Discover: swipe card with match-potential bar" />
+  <img src="docs/screenshots/details.png" width="180" alt="Dish details sheet with flavor profile" />
+  <img src="docs/screenshots/liked-foods.png" width="180" alt="Liked foods gallery" />
+  <img src="docs/screenshots/profile.png" width="180" alt="Profile stats" />
+  <img src="docs/screenshots/filters.png" width="180" alt="Allergen filters" />
+</p>
+
 ## Status
 
 A working MVP, paused after the first round of Phase 1 hardening. It runs on a phone via Expo Go, is entirely local (no backend, accounts, or restaurant data), and has 332 curated dishes. Typecheck, 112 tests, and the dish-data validator all pass in CI.
