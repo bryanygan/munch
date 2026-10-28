@@ -4,6 +4,20 @@ A swipe-to-decide food discovery app. Browse dishes like you're swiping on a dat
 
 Built with Expo + React Native (New Architecture), TypeScript, Zustand, and Reanimated.
 
+![CI](https://github.com/bryanygan/munch/actions/workflows/ci.yml/badge.svg)
+
+## Status
+
+A working MVP, paused after the first round of Phase 1 hardening. It runs on a phone via Expo Go, is entirely local (no backend, accounts, or restaurant data), and has 332 curated dishes. Typecheck, 112 tests, and the dish-data validator all pass in CI.
+
+Known limitations:
+
+- **Placeholder images.** 310 of the 332 dishes use seeded `picsum.photos` photos, which are random and don't depict the dish. The tooling for replacing them is built (see [Content tooling](#content-tooling)) but the picking pass hasn't been done.
+- **Analytics and error monitoring are no-ops.** The adapters are wired in; PostHog/Sentry just aren't plugged in yet.
+- **Expo Go only.** No EAS dev build or store release yet.
+
+See [`docs/roadmap.md`](docs/roadmap.md) for the plan from here to a public release.
+
 ## Features
 
 - **Swipe to discover** — Card stack with gestures, YUM/NOPE badges, and haptics.
@@ -66,6 +80,28 @@ npm run test:coverage
 ```
 
 Path alias `@/*` maps to `mobile/src/*` (see `tsconfig.json`).
+
+## How recommendations work
+
+Each swipe updates a session taste vector over seven flavor axes (sweet, sour, salty, bitter, umami, heat, richness) plus liked/seen counts per cuisine region, meal type, and texture. `RecommendationEngine` combines three scorers (`FlavorSimilarity`, `CategoricalAffinity`, `PopularityTieBreaker`) to rank the remaining dishes. At match time the top 3 are shown with match percentages, and `computeMatchConfidence` (1 minus normalized entropy of the top scores) measures how decisive the result is. Dietary, allergen, and price filters are applied before scoring.
+
+## Content tooling
+
+Dishes live in `mobile/src/data/foods.json`. Scripts in `scripts/` (run from the repo root after `npm install`):
+
+```bash
+npm run validate-foods            # schema, duplicates, flavor sanity; also run in CI
+npm run compute-thumbhashes       # regenerate blurred image placeholders
+npm run fetch-image-candidates    # needs PEXELS_API_KEY in .env; writes scripts/image-candidates.js
+open scripts/image-picker.html    # pick a photo per dish, then download image-selections.json
+npm run apply-image-selections    # write the picks into foods.json
+```
+
+## Docs
+
+- [`docs/roadmap.md`](docs/roadmap.md): MVP to production plan
+- [`docs/phase-1-setup-guide.md`](docs/phase-1-setup-guide.md): Phase 1 steps that need your own accounts
+- [`docs/superpowers/`](docs/superpowers/): original MVP design spec and implementation plan
 
 ## Tech stack
 

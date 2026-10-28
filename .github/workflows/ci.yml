@@ -31,4 +31,4 @@ jobs:
         run: npm test -- --ci --forceExit
 
       - name: Validate foods.json
-        run: node scripts/validate-foods.mjs
+        run: node ../scripts/validate-foods.mjs

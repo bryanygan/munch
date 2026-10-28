@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Munch — Image Picker</title>
+<style>
+  :root {
+    --bg: #0f1115; --card: #1a1d24; --border: #2a2f3a; --text: #e8eaed;
+    --muted: #9aa0a6; --accent: #ff7a45; --good: #4ade80; --warn: #fbbf24;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: system-ui, -apple-system, sans-serif;
+         background: var(--bg); color: var(--text); min-height: 100vh; }
+  header { padding: 16px 24px; border-bottom: 1px solid var(--border);
+           display: flex; align-items: center; gap: 16px; position: sticky; top: 0;
+           background: var(--bg); z-index: 10; flex-wrap: wrap; }
+  header h1 { margin: 0; font-size: 18px; font-weight: 600; }
+  header .spacer { flex: 1; }
+  button { background: var(--card); color: var(--text); border: 1px solid var(--border);
+           padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: #000; border-color: var(--accent); font-weight: 600; }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  .google-btn { background: var(--card); color: var(--muted); border: 1px solid var(--border);
+               padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 14px;
+               text-decoration: none; display: inline-flex; align-items: center; }
+  .google-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .progress { color: var(--muted); font-size: 13px; }
+  .progress b { color: var(--good); }
+  main { padding: 24px; max-width: 1400px; margin: 0 auto; }
+  .dish-header { margin-bottom: 16px; }
+  .dish-header h2 { margin: 0 0 4px 0; font-size: 24px; }
+  .dish-header p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
+  .dish-meta { margin-top: 8px; color: var(--muted); font-size: 13px; }
+  .dish-meta .id { color: var(--accent); font-family: ui-monospace, monospace; }
+  .dish-meta .selected-link { color: var(--good); text-decoration: none; }
+  .dish-meta .not-selected { color: var(--warn); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+          gap: 16px; margin-top: 20px; }
+  .tile { background: var(--card); border: 2px solid var(--border); border-radius: 8px;
+          overflow: hidden; cursor: pointer; transition: border-color 0.1s;
+          display: flex; flex-direction: column; }
+  .tile:hover { border-color: var(--accent); }
+  .tile.selected { border-color: var(--good); box-shadow: 0 0 0 2px var(--good); }
+  .tile img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #000; display: block; }
+  .tile .meta { padding: 8px 12px; font-size: 12px; color: var(--muted);
+                display: flex; justify-content: space-between; align-items: center; }
+  .tile .provider { text-transform: uppercase; font-weight: 600;
+                    letter-spacing: 0.5px; font-size: 10px; }
+  .tile .provider.pexels { color: #05a081; }
+  .tile .provider.unsplash { color: #ffffff; }
+  .tile .src { color: var(--muted); text-decoration: none; }
+  .tile .src:hover { color: var(--accent); }
+  .empty { padding: 48px; text-align: center; color: var(--muted); }
+  .manual { margin-top: 20px; padding: 16px; background: var(--card);
+            border-radius: 8px; border: 1px solid var(--border); }
+  .manual label { display: block; margin-bottom: 8px; font-size: 13px; color: var(--muted); }
+  .manual input { width: 100%; padding: 8px 12px; background: var(--bg);
+                  border: 1px solid var(--border); border-radius: 6px;
+                  color: var(--text); font-size: 13px; font-family: ui-monospace, monospace; }
+  .bar { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; margin-top: 4px; width: 200px; }
+  .bar > div { height: 100%; background: var(--good); transition: width 0.2s; }
+  .export-ok { background: var(--good); color: #000; border: none; font-weight: 600; }
+  kbd { background: var(--bg); border: 1px solid var(--border);
+        border-radius: 3px; padding: 1px 6px; font-size: 11px; font-family: ui-monospace, monospace; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Munch Image Picker</h1>
+  <div class="progress">
+    <span id="progress-text">—</span>
+    <div class="bar"><div id="progress-bar" style="width: 0"></div></div>
+  </div>
+  <div class="spacer"></div>
+  <button id="prev-btn">Prev</button>
+  <button id="skip-btn">Skip</button>
+  <button id="next-btn" class="primary">Next</button>
+  <button id="export-btn">Download selections</button>
+  <button id="google-img-btn" class="google-btn">Google Images &#x2197;</button>
+</header>
+
+<main>
+  <div class="dish-header">
+    <h2 id="dish-name">Loading...</h2>
+    <p id="dish-desc"></p>
+    <div class="dish-meta">
+      <span class="id" id="dish-id"></span>
+      <span id="dish-selected"></span>
+    </div>
+  </div>
+
+  <div id="grid-wrap"></div>
+
+  <div class="manual">
+    <label for="manual-url">Manual URL override (paste any image URL, press Enter to use)</label>
+    <input id="manual-url" type="url" placeholder="https://..." />
+  </div>
+
+  <p style="color: var(--muted); font-size: 12px; margin-top: 32px;">
+    Keys: <kbd>&larr;</kbd>/<kbd>&rarr;</kbd> navigate &middot; <kbd>s</kbd> skip &middot; <kbd>1&ndash;9</kbd> pick tile
+  </p>
+</main>
+
+<script src="./image-candidates.js"></script>
+<script>
+(function() {
+  'use strict';
+  var STORAGE_KEY = 'munch-image-selections';
+  var data = window.CANDIDATES || {};
+  var ids = Object.keys(data);
+  var $ = function (id) { return document.getElementById(id); };
+  var googleWindow = null;
+
+  function googleUrl(name) {
+    return 'https://www.google.com/search?tbm=isch&q=' + encodeURIComponent(name + ' food');
+  }
+
+  var gridWrap = $('grid-wrap');
+
+  if (ids.length === 0) {
+    var empty = document.createElement('div');
+    empty.className = 'empty';
+    empty.textContent = 'No candidates loaded. Run `node scripts/fetch-image-candidates.mjs` first, then reload.';
+    gridWrap.appendChild(empty);
+    return;
+  }
+
+  var selections = {};
+  try { selections = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch (e) { selections = {}; }
+
+  var index = 0;
+  var firstUnselected = ids.findIndex(function (id) { return !selections[id]; });
+  if (firstUnselected >= 0) index = firstUnselected;
+
+  function save() {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
+  }
+
+  function makeTile(cand, isSelected, keyHint, onPick) {
+    var tile = document.createElement('div');
+    tile.className = 'tile' + (isSelected ? ' selected' : '');
+    tile.addEventListener('click', onPick);
+
+    var img = document.createElement('img');
+    img.loading = 'lazy';
+    img.src = cand.thumb;
+    img.alt = cand.alt || '';
+    tile.appendChild(img);
+
+    var meta = document.createElement('div');
+    meta.className = 'meta';
+
+    var left = document.createElement('span');
+    var providerSpan = document.createElement('span');
+    providerSpan.className = 'provider ' + cand.provider;
+    providerSpan.textContent = cand.provider;
+    left.appendChild(providerSpan);
+    if (keyHint) {
+      left.appendChild(document.createTextNode(' '));
+      var kbd = document.createElement('kbd');
+      kbd.textContent = String(keyHint);
+      left.appendChild(kbd);
+    }
+    meta.appendChild(left);
+
+    var srcLink = document.createElement('a');
+    srcLink.className = 'src';
+    srcLink.target = '_blank';
+    srcLink.rel = 'noopener';
+    srcLink.href = cand.source_page || '#';
+    srcLink.textContent = (cand.photographer || 'source') + ' \u2197';
+    meta.appendChild(srcLink);
+
+    tile.appendChild(meta);
+    return tile;
+  }
+
+  function render() {
+    var id = ids[index];
+    var entry = data[id];
+    var selectedUrl = selections[id] || '';
+
+    $('dish-name').textContent = entry.name;
+    $('dish-desc').textContent = entry.description;
+    $('dish-id').textContent = id;
+    if (googleWindow && !googleWindow.closed) {
+      window.open(googleUrl(entry.name), 'munch-google-images');
+    }
+
+    var sel = $('dish-selected');
+    sel.textContent = '';
+    if (selectedUrl) {
+      sel.appendChild(document.createTextNode(' \u00b7 \u2713 selected: '));
+      var a = document.createElement('a');
+      a.className = 'selected-link';
+      a.href = selectedUrl;
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.textContent = selectedUrl.length > 60 ? selectedUrl.slice(0, 60) + '...' : selectedUrl;
+      sel.appendChild(a);
+    } else {
+      var warn = document.createElement('span');
+      warn.className = 'not-selected';
+      warn.textContent = ' \u00b7 not selected';
+      sel.appendChild(warn);
+    }
+
+    // Grid
+    gridWrap.textContent = '';
+    var grid = document.createElement('div');
+    grid.className = 'grid';
+    var cands = entry.candidates || [];
+    if (cands.length === 0) {
+      var emptyMsg = document.createElement('div');
+      emptyMsg.className = 'empty';
+      emptyMsg.textContent = 'No candidates returned. Use the manual URL field below.';
+      gridWrap.appendChild(emptyMsg);
+    } else {
+      cands.forEach(function (cand, i) {
+        var tile = makeTile(
+          cand,
+          cand.full === selectedUrl,
+          (i + 1) <= 9 ? (i + 1) : null,
+          function () {
+            selections[id] = cand.full;
+            save();
+            render();
+          }
+        );
+        grid.appendChild(tile);
+      });
+      gridWrap.appendChild(grid);
+    }
+
+    var isManualUrl = selectedUrl && !cands.some(function (c) { return c.full === selectedUrl; });
+    $('manual-url').value = isManualUrl ? selectedUrl : '';
+
+    var count = ids.reduce(function (n, i) { return n + (selections[i] ? 1 : 0); }, 0);
+    var pt = $('progress-text');
+    pt.textContent = '';
+    var b = document.createElement('b');
+    b.textContent = String(count);
+    pt.appendChild(b);
+    pt.appendChild(document.createTextNode(' / ' + ids.length + ' selected \u00b7 viewing ' + (index + 1)));
+    $('progress-bar').style.width = ((count / ids.length) * 100) + '%';
+
+    $('prev-btn').disabled = index === 0;
+    $('next-btn').disabled = index >= ids.length - 1;
+    $('export-btn').className = count > 0 ? 'export-ok' : '';
+  }
+
+  function go(delta) {
+    index = Math.max(0, Math.min(ids.length - 1, index + delta));
+    render();
+  }
+
+  $('prev-btn').addEventListener('click', function () { go(-1); });
+  $('next-btn').addEventListener('click', function () { go(+1); });
+  $('skip-btn').addEventListener('click', function () { go(+1); });
+
+  $('manual-url').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+      var url = $('manual-url').value.trim();
+      if (url) {
+        selections[ids[index]] = url;
+        save();
+        render();
+      }
+    }
+  });
+
+  $('google-img-btn').addEventListener('click', function () {
+    googleWindow = window.open(googleUrl(data[ids[index]].name), 'munch-google-images');
+  });
+
+  $('export-btn').addEventListener('click', function () {
+    var blob = new Blob([JSON.stringify(selections, null, 2)], { type: 'application/json' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'image-selections.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (document.activeElement.tagName === 'INPUT') return;
+    if (e.key === 'ArrowLeft') go(-1);
+    else if (e.key === 'ArrowRight') go(+1);
+    else if (e.key === 's' || e.key === 'S') go(+1);
+    else if (/^[1-9]$/.test(e.key)) {
+      var entry = data[ids[index]];
+      var cand = entry && entry.candidates && entry.candidates[parseInt(e.key, 10) - 1];
+      if (cand) {
+        selections[ids[index]] = cand.full;
+        save();
+        render();
+      }
+    }
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

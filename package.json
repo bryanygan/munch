@@ -8,6 +8,8 @@
   },
   "scripts": {
     "compute-thumbhashes": "node scripts/compute-thumbhashes.mjs",
-    "validate-foods": "node scripts/validate-foods.mjs"
+    "validate-foods": "node scripts/validate-foods.mjs",
+    "fetch-image-candidates": "node scripts/fetch-image-candidates.mjs",
+    "apply-image-selections": "node scripts/apply-image-selections.mjs"
   }
 }

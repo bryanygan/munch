@@ -40,3 +40,11 @@ coverage/
 
 # Claude workspace
 claude-workspace/
+
+# Image picker artifacts (generated locally)
+scripts/image-candidates.js
+image-selections.json
+scripts/image-selections.json
+
+# Playwright MCP scratch output
+.playwright-mcp/

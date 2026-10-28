@@ -17,7 +17,7 @@ Do them in the order listed. Each builds on the previous.
 **Steps:**
 
 ```bash
-cd C:/Users/prinp/Documents/GitHub/munch
+cd <repo-root>
 npm install
 ```
 
@@ -151,7 +151,7 @@ Then I'll add a helper `dishImageUrl(dish, 'card' | 'thumb')` that constructs th
 
 1. **Log in to Expo CLI:**
    ```bash
-   cd C:/Users/prinp/Documents/GitHub/munch/mobile
+   cd <repo-root>/mobile
    eas login
    ```
 
