@@ -22,7 +22,7 @@ A working MVP, paused after the first round of Phase 1 hardening. It runs on a p
 
 Known limitations:
 
-- **Some placeholder images.** 188 of the 332 dishes have real photos (mostly from [Pexels](https://www.pexels.com/license/), picked by a local CLIP model and then eyeballed). The other 144 use seeded `picsum.photos` photos, which are random and don't depict the dish. Candidates for those exist but need a manual pass (see [Content tooling](#content-tooling)).
+- **Some placeholder images.** 309 of the 332 dishes have real photos (mostly from [Pexels](https://www.pexels.com/license/), shortlisted by a local CLIP model and checked by eye). The other 23 still use seeded `picsum.photos` photos, which are random and don't depict the dish. They need a manual search; none of the fetched candidates showed the actual dish (see [Content tooling](#content-tooling)).
 - **Analytics and error monitoring are no-ops.** The adapters are wired in; PostHog/Sentry just aren't plugged in yet.
 - **Expo Go only.** No EAS dev build or store release yet.
 

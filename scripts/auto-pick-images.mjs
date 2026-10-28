@@ -17,7 +17,7 @@
 //
 // Usage:
 //   node scripts/auto-pick-images.mjs [--only=id1,id2] [--limit=N] [--threshold=0.6]
-//                                     [--include-likely] [--no-sheets] [--model=Xenova/clip-vit-base-patch16]
+//                                     [--include-likely] [--no-sheets] [--all-sheets] [--model=Xenova/clip-vit-base-patch16]
 //   node scripts/apply-image-selections.mjs scripts/auto-selections.json
 //
 // Embeddings are cached in scripts/.cache, so reruns are fast. First run downloads the
@@ -55,6 +55,7 @@ const ONLY = opt('only', '') ? new Set(opt('only').split(',')) : null;
 const LIMIT = parseInt(opt('limit', '0'), 10) || Infinity;
 const INCLUDE_LIKELY = flag('include-likely');
 const MAKE_SHEETS = !flag('no-sheets');
+const ALL_SHEETS = flag('all-sheets'); // sheets for every processed dish, not just review/likely
 const LOGIT_SCALE = 100; // CLIP's learned temperature
 
 // Photos that are not of a plate of food. Probability mass on these counts against a candidate.
@@ -227,7 +228,9 @@ console.log(`Report -> ${path.relative(ROOT, OUT_REPORT)}`);
 
 // --- Contact sheets for dishes that need a human ---
 if (MAKE_SHEETS) {
-  const needReview = report.filter(r => r.tier === 'review' || (r.tier === 'likely' && !INCLUDE_LIKELY));
+  const needReview = ALL_SHEETS
+    ? report
+    : report.filter(r => r.tier === 'review' || (r.tier === 'likely' && !INCLUDE_LIKELY));
   fs.rmSync(SHEETS_DIR, { recursive: true, force: true });
   if (needReview.length) {
     fs.mkdirSync(SHEETS_DIR, { recursive: true });
